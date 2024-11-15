@@ -1,4 +1,4 @@
-# 🎯 ArcifyIndicator
+# ArcifyIndicator
 
 **ArcifyIndicator** is a customizable circular progress indicator designed for Android Jetpack Compose. It offers a flexible and animated arc-shaped progress bar with various configuration options to enhance your application's user interface.
 
