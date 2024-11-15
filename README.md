@@ -79,7 +79,20 @@ ArcifyIndicator(
 )
 ```
 
----
+### Infinite Progress Indicator
+```kotlin
+ArcifyInfiniteIndicator(
+    modifier = Modifier.size(100.dp),
+    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
+    backgroundColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f),
+    strokeWidth = 6.dp,
+    strokeCap = StrokeCap.Round,
+    progressDirection = ArcifyProgressDirection.CLOCKWISE,
+    animationDuration = 1000,
+    centerContent = {
+        Text(text = "Loading...", style = MaterialTheme.typography.body2)
+    }
+)
+```
 
-📦 Installation
-Add the following dependency to your project’s build.gradle file:
+---
