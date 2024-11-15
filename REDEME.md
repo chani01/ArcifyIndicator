@@ -24,7 +24,7 @@
 
 ## 🚀 Usage
 
-### Basic Example
+### Manual Progress Mode
 
 ```kotlin
 ArcifyIndicator(
@@ -36,3 +36,37 @@ ArcifyIndicator(
     strokeCap = StrokeCap.Round,
     progressDirection = ProgressDirection.CLOCKWISE
 )
+```
+
+### Auto Progress Mode
+```kotlin
+ArcifyIndicator(
+    modifier = Modifier.size(100.dp),
+    progressState = ProgressState.Auto(autoProgressDelay = 1000L), // Updates every second
+    color = Color.Green,
+    backgroundColor = Color.LightGray,
+    strokeWidth = 6.dp,
+    animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing)
+)
+```
+
+### Center Content and Progress Change Callback
+```kotlin
+ArcifyIndicator(
+    modifier = Modifier.size(120.dp),
+    progressState = ProgressState.Manual(progress = 0.5f),
+    color = Color.Red,
+    strokeWidth = 10.dp,
+    centerContent = {
+        Text(text = "50%", style = MaterialTheme.typography.h6)
+    },
+    onProgressChanged = { progress ->
+        println("Progress changed: $progress")
+    }
+)
+```
+
+---
+
+📦 Installation
+Add the following dependency to your project’s build.gradle file:
