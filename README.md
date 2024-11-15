@@ -21,8 +21,21 @@
   -  **Progress Change Callback**: Receive callbacks when the progress value changes.
 
 ---
+## 🚀 Installation
 
-## 🚀 Usage
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/chani01/ArcifyIndicator?label=Latest%20Version)](https://github.com/chani01/ArcifyIndicator/releases)
+
+Add the following dependency to your `build.gradle` file once the library is published:
+
+```gradle
+dependencies {
+    implementation 'com.chani01:ArcifyIndicator:<latest_version>'
+}
+```
+
+---
+
+## 📖  Usage
 
 ### Manual Progress Mode
 
