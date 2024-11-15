@@ -42,12 +42,12 @@ dependencies {
 ```kotlin
 ArcifyIndicator(
     modifier = Modifier.size(100.dp),
-    progressState = ProgressState.Manual(progress = 0.75f),
+    progressState = ArcifyProgressState.Manual(progress = 0.75f),
     color = Color.Blue,
     backgroundColor = Color.Gray,
     strokeWidth = 8.dp,
     strokeCap = StrokeCap.Round,
-    progressDirection = ProgressDirection.CLOCKWISE
+    progressDirection = ArcifyProgressDirection.CLOCKWISE
 )
 ```
 
@@ -55,7 +55,7 @@ ArcifyIndicator(
 ```kotlin
 ArcifyIndicator(
     modifier = Modifier.size(100.dp),
-    progressState = ProgressState.Auto(autoProgressDelay = 1000L), // Updates every second
+    progressState = ArcifyProgressState.Auto(autoProgressDelay = 1000L), // Updates every second
     color = Color.Green,
     backgroundColor = Color.LightGray,
     strokeWidth = 6.dp,
