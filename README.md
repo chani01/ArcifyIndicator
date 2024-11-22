@@ -29,7 +29,7 @@ Add the following dependency to your `build.gradle` file once the library is pub
 
 ```gradle
 dependencies {
-    implementation 'com.chani01:ArcifyIndicator:<latest_version>'
+    implementation 'com.github.chani01:ArcifyIndicator:<latest_version>'
 }
 ```
 
