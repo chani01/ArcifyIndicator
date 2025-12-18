@@ -1,5 +1,5 @@
 [versions]
-agp = "8.6.0"
+agp = "8.1.4"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -12,7 +12,7 @@ appcompat = "1.7.0"
 material = "1.12.0"
 navigationCompose = "2.8.3"
 mavenGradlePlugin = "2.1"
-arcifyCircleIndicator = "1.0.0"
+arcifyCircleIndicator = "1.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
