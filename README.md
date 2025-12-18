@@ -24,6 +24,7 @@
 
 ## Installation
 
+### 1. Add JitPack repository
 ```gradle
 dependencyResolutionManagement {
     repositories {
