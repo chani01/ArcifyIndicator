@@ -24,11 +24,18 @@
 
 ## Installation
 
-Add the following dependency to your `build.gradle` file:
+```gradle
+dependencyResolutionManagement {
+    repositories {
+        maven { url = uri("https://jitpack.io") }
+    }
+}
+```
 
+### 2. Add dependency
 ```gradle
 dependencies {
-    implementation 'com.github.chani01:ArcifyCircleIndicator:<latest_version>'
+    implementation "com.github.chani01:Probe:<latest_version>"
 }
 ```
 
