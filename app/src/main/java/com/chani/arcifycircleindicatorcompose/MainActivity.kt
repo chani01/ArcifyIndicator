@@ -48,8 +48,16 @@ fun ArcifyApp(modifier: Modifier = Modifier) {
                 InfiniteScreen()
             }
 
-            composable("basic") {
-                ProgressScreen()
+            composable("basic-auto") {
+                ProgressAutoScreen()
+            }
+
+            composable("basic-Manual") {
+                ProgressManualScreen()
+            }
+
+            composable("basic-TimeBase") {
+                ProgressTimeScreen()
             }
         }
     }

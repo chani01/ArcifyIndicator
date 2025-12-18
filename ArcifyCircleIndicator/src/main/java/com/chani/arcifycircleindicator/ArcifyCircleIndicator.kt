@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -58,15 +59,49 @@ fun ArcifyCircleIndicator(
 
     when (progressState) {
         is ArcifyProgressState.Auto -> {
-            LaunchedEffect(Unit) {
+            LaunchedEffect(progressState) {
+                currentProgress = 0f
+                val safeDelay = progressState.autoProgressDelay.coerceAtLeast(1L)
                 while (true) {
-                    delay(progressState.autoProgressDelay)
+                    delay(safeDelay)
                     currentProgress = 1.0f
                 }
             }
         }
         is ArcifyProgressState.Manual -> {
-            currentProgress = progressState.progress
+            LaunchedEffect(progressState.progress) {
+                currentProgress = progressState.progress
+            }
+        }
+        is ArcifyProgressState.TimeBased -> {
+            var startTime by remember { mutableLongStateOf(System.currentTimeMillis()) }
+            var currentDuration by remember { mutableLongStateOf(progressState.duration) }
+            
+            LaunchedEffect(progressState.duration) {
+                // duration이 변경되면 현재 progress와 경과 시간을 기반으로 startTime 재조정
+                if (progressState.duration != currentDuration && currentProgress > 0f && currentProgress < 1.0f) {
+                    val elapsedTime = (currentProgress * currentDuration).toLong()
+                    startTime = System.currentTimeMillis() - elapsedTime
+                }
+                currentDuration = progressState.duration
+            }
+            
+            LaunchedEffect(Unit) {
+                val updateInterval = 16L  // ~60fps
+                
+                while (true) {
+                    delay(updateInterval)
+                    val elapsedTime = System.currentTimeMillis() - startTime
+                    currentProgress = (elapsedTime.toFloat() / currentDuration).coerceAtMost(1.0f)
+                    
+                    if (currentProgress >= 1.0f) {
+                        currentProgress = 1.0f
+                        delay(1000)
+                        startTime = System.currentTimeMillis()
+                        currentProgress = 0f
+                    }
+                }
+            }
         }
     }
 

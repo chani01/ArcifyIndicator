@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -32,7 +33,7 @@ import kotlinx.coroutines.delay
 fun MainScreen(modifier: Modifier = Modifier) {
     val navController = LocalNavController.current
 
-    Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(modifier.fillMaxSize().padding(16.dp), contentAlignment = Alignment.Center) {
         Column {
             Button(
                 onClick = { navController.navigate("infinite") },
@@ -42,10 +43,24 @@ fun MainScreen(modifier: Modifier = Modifier) {
             }
 
             Button(
-                onClick = { navController.navigate("basic") },
+                onClick = { navController.navigate("basic-auto") },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text(text = "basic")
+                Text(text = "basic(auto)")
+            }
+
+            Button(
+                onClick = { navController.navigate("basic-Manual") },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = "basic(Manual)")
+            }
+
+            Button(
+                onClick = { navController.navigate("basic-TimeBase") },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = "basic(TimeBase)")
             }
         }
     }
