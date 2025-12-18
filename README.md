@@ -1,47 +1,46 @@
-# ArcifyIndicator
+# ArcifyCircleIndicator
 
-**ArcifyIndicator** is a customizable circular progress indicator designed for Android Jetpack Compose. It offers a flexible and animated arc-shaped progress bar with various configuration options to enhance your application's user interface.
+**ArcifyCircleIndicator** is a customizable circular progress indicator library for Android Jetpack Compose. It provides flexible and animated arc-shaped progress bars with various configuration options to enhance your application's user interface.
 
----
+## Features
 
-## 🌟 Features
+### Progress Modes
+- **Manual**: Allows manual control of the progress value
+- **Auto**: Automatically progresses at a specified interval with infinite loop
+- **TimeBased**: Automatically progresses based on a specified duration with smooth real-time updates
 
-- **Progress Modes**:
-  - **Manual**: Allows manual control of the progress value.
-  - **Auto**: Automatically progresses at a specified interval.
+### Customization Options
+- **Color**: Set the color of the progress arc
+- **Background Color**: Define the color of the unprogressed background arc
+- **Stroke Width**: Adjust the thickness of the progress bar
+- **Stroke Cap**: Choose the shape of the ends of the progress bar (Butt or Round)
+- **Progress Direction**: Select the direction of progress (CLOCKWISE or COUNTERCLOCKWISE)
+- **Animation Specification**: Configure the animation's duration and easing
+- **Center Content**: Insert custom composable content at the center of the indicator
+- **Progress Change Callback**: Receive callbacks when the progress value changes
 
-- **Customization Options**:
-  -  **Color**: Set the color of the progress arc.
-  -  **Background Color**: Define the color of the unprogressed background arc.
-  -  **Stroke Width**: Adjust the thickness of the progress bar.
-  -  **Stroke Cap**: Choose the shape of the ends of the progress bar (Butt or Round).
-  -  **Progress Direction**: Select the direction of progress (CLOCKWISE or COUNTERCLOCKWISE).
-  -  **Animation Specification**: Configure the animation's duration and easing.
-  -  **Center Content**: Insert custom composable content at the center of the indicator.
-  -  **Progress Change Callback**: Receive callbacks when the progress value changes.
+### Additional Components
+- **ArcifyInfiniteIndicator**: Infinite rotating progress indicator for loading states
 
----
-## 🚀 Installation
+## Installation
 
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/chani01/ArcifyIndicator?label=Latest%20Version)](https://github.com/chani01/ArcifyIndicator/releases)
-
-Add the following dependency to your `build.gradle` file once the library is published:
+Add the following dependency to your `build.gradle` file:
 
 ```gradle
 dependencies {
-    implementation 'com.github.chani01:ArcifyIndicator:<latest_version>'
+    implementation 'com.github.chani01:ArcifyCircleIndicator:<latest_version>'
 }
 ```
 
----
-
-## 📖  Usage
+## Usage
 
 ### Manual Progress Mode
 
+Control the progress value manually:
+
 ```kotlin
-ArcifyIndicator(
-    modifier = Modifier.size(100.dp),
+ArcifyCircleIndicator(
+    modifier = Modifier.size(200.dp),
     progressState = ArcifyProgressState.Manual(progress = 0.75f),
     color = Color.Blue,
     backgroundColor = Color.Gray,
@@ -52,34 +51,77 @@ ArcifyIndicator(
 ```
 
 ### Auto Progress Mode
+
+Automatically progress with a specified delay interval:
+
 ```kotlin
-ArcifyIndicator(
-    modifier = Modifier.size(100.dp),
-    progressState = ArcifyProgressState.Auto(autoProgressDelay = 1000L), // Updates every second
+ArcifyCircleIndicator(
+    modifier = Modifier.size(200.dp),
+    progressState = ArcifyProgressState.Auto(autoProgressDelay = 3000L), // 3 seconds
     color = Color.Green,
     backgroundColor = Color.LightGray,
-    strokeWidth = 6.dp,
-    animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing)
+    strokeWidth = 8.dp,
+    animationSpec = tween(
+        durationMillis = 1000,
+        easing = LinearEasing
+    )
+)
+```
+
+> **Note**: The `autoProgressDelay` parameter has a minimum value of 1ms to prevent crashes. If you pass 0, it will automatically be adjusted to 1ms.
+
+### TimeBased Progress Mode
+
+Automatically progress based on a specified duration with real-time updates:
+
+```kotlin
+var animatedProgress by remember { mutableFloatStateOf(0f) }
+
+ArcifyCircleIndicator(
+    modifier = Modifier.size(200.dp),
+    progressState = ArcifyProgressState.TimeBased(duration = 5000L), // 5 seconds
+    color = MaterialTheme.colorScheme.primary,
+    strokeWidth = 8.dp,
+    strokeCap = StrokeCap.Round,
+    animationSpec = tween(
+        durationMillis = 50,
+        easing = LinearEasing
+    ),
+    centerContent = {
+        Text("${(animatedProgress * 100).toInt()}%")
+    },
+    onProgressChanged = { animatedProgress = it }
 )
 ```
 
 ### Center Content and Progress Change Callback
+
+Display custom content at the center and receive progress updates:
+
 ```kotlin
-ArcifyIndicator(
-    modifier = Modifier.size(120.dp),
-    progressState = ProgressState.Manual(progress = 0.5f),
+var currentProgress by remember { mutableFloatStateOf(0f) }
+
+ArcifyCircleIndicator(
+    modifier = Modifier.size(150.dp),
+    progressState = ArcifyProgressState.Manual(progress = 0.5f),
     color = Color.Red,
     strokeWidth = 10.dp,
     centerContent = {
-        Text(text = "50%", style = MaterialTheme.typography.h6)
+        Text(
+            text = "${(currentProgress * 100).toInt()}%",
+            style = MaterialTheme.typography.headlineMedium
+        )
     },
     onProgressChanged = { progress ->
-        println("Progress changed: $progress")
+        currentProgress = progress
     }
 )
 ```
 
 ### Infinite Progress Indicator
+
+For loading states with infinite rotating animation:
+
 ```kotlin
 ArcifyInfiniteIndicator(
     modifier = Modifier.size(100.dp),
@@ -90,20 +132,43 @@ ArcifyInfiniteIndicator(
     progressDirection = ArcifyProgressDirection.CLOCKWISE,
     animationDuration = 1000,
     centerContent = {
-        Text(text = "Loading...", style = MaterialTheme.typography.body2)
+        Text(text = "Loading...", style = MaterialTheme.typography.bodyMedium)
     }
 )
 ```
 
----
-## 📄 License
+## API Reference
 
-This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+### ArcifyCircleIndicator
 
----
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `modifier` | `Modifier` | `Modifier` | Configure the size and layout |
+| `progressState` | `ArcifyProgressState` | `Manual(0f)` | Defines the progress state and mode |
+| `color` | `Color` | `primary.copy(0.8f)` | Color of the progress arc |
+| `backgroundColor` | `Color` | `onSurface.copy(0.2f)` | Color of the background arc |
+| `strokeWidth` | `Dp` | `6.dp` | Thickness of the progress bar |
+| `strokeCap` | `StrokeCap` | `Round` | Shape of the line ends |
+| `progressDirection` | `ArcifyProgressDirection` | `CLOCKWISE` | Direction of progress |
+| `animationSpec` | `AnimationSpec<Float>?` | `tween(1000)` | Animation configuration |
+| `centerContent` | `@Composable (() -> Unit)?` | `null` | Custom center content |
+| `onProgressChanged` | `((Float) -> Unit)?` | `null` | Progress change callback |
 
-## 🙌 Contributions
+### ArcifyProgressState
 
-Contributions are welcome! Feel free to open issues, submit pull requests, or suggest new features. 😊
+- **`Manual(progress: Float)`**: Manual progress control (0.0 to 1.0)
+- **`Auto(autoProgressDelay: Long = 500L)`**: Automatic progress with delay interval (minimum 1ms)
+- **`TimeBased(duration: Long = 5000L)`**: Time-based automatic progress with specified duration
 
----
+### ArcifyProgressDirection
+
+- **`CLOCKWISE`**: Progress proceeds clockwise (to the right)
+- **`COUNTERCLOCKWISE`**: Progress proceeds counterclockwise (to the left)
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contributions
+
+Contributions are welcome! Feel free to open issues, submit pull requests, or suggest new features.
