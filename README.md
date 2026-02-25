@@ -36,7 +36,7 @@ dependencyResolutionManagement {
 ### 2. Add dependency
 ```gradle
 dependencies {
-    implementation "com.github.chani01:ArcifyCircleIndicator:<latest_version>"
+    implementation "com.github.chani01:ArcifyIndicator:<latest_version>"
 }
 ```
 
